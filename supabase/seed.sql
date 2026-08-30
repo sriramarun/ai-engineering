@@ -1,0 +1,9 @@
+-- Scholar seed data.
+--
+-- This file is intentionally empty. Seed data is added as the schema grows:
+--   - Post 05: documents + chunks + embeddings tables
+--   - Post 11: profiles, workspaces, memberships (RLS-enabled)
+--   - Post 12: subscriptions, usage_ledger
+--
+-- When adding seed data, keep it small (< 100 rows), idempotent, and safe to
+-- run in local dev only. Never commit seed data that would leak in production.

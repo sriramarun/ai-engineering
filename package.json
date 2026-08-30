@@ -1,0 +1,31 @@
+{
+  "name": "scholar",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An AI Engineering course, built as a real SaaS. See SYLLABUS.md.",
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "evals": "tsx tests/evals/run.ts",
+    "evals:ci": "tsx tests/evals/run.ts --ci",
+    "db:reset": "supabase db reset",
+    "db:push": "supabase db push",
+    "db:types": "supabase gen types typescript --local > lib/supabase/types.ts",
+    "format": "prettier --write ."
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "//": "Dependencies are installed in Post 02 (Environment & Repo). See posts/02-environment-and-repo.md."
+}

@@ -1,0 +1,43 @@
+name: Flag stale posts
+
+on:
+  schedule:
+    # First of every month at 09:00 UTC
+    - cron: '0 9 1 * *'
+  workflow_dispatch:
+
+jobs:
+  flag-stale:
+    name: Flag posts unreviewed in 6 months
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find stale posts
+        run: |
+          # A post is stale if Last reviewed: is more than 180 days ago
+          THRESHOLD=$(date -d "180 days ago" +%Y-%m-%d)
+          STALE_COUNT=0
+          for post in posts/*.md; do
+            [ -f "$post" ] || continue
+            LAST=$(grep -m1 '^Last reviewed:' "$post" | sed 's/Last reviewed:[[:space:]]*//')
+            if [ -z "$LAST" ]; then continue; fi
+            if [[ "$LAST" < "$THRESHOLD" ]]; then
+              echo "STALE: $post (last reviewed $LAST)"
+              STALE_COUNT=$((STALE_COUNT + 1))
+            fi
+          done
+          echo "STALE_COUNT=$STALE_COUNT" >> $GITHUB_ENV
+
+      - name: Open issue if stale posts found
+        if: env.STALE_COUNT != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `${process.env.STALE_COUNT} post(s) unreviewed in 6+ months`,
+              body: 'The stale-post workflow flagged posts that have not been reviewed in over 180 days. See the workflow run log for the list. Please review, refresh, and update the `Last reviewed:` frontmatter.',
+              labels: ['stale-content', 'maintenance']
+            });
