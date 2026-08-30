@@ -88,8 +88,9 @@ Every choice is defensible for a real product, and every one has a free tier gen
 ## Start here
 
 1. Read [SYLLABUS.md](./SYLLABUS.md) — the full map, including the stack rationale and the software-engineering concepts mapped to each week.
-2. Read [Week 1](./posts/01-what-is-ai-engineering.md).
-3. Fork this repo and follow along. By Week 14 you'll have a deployed SaaS.
+2. Read [docs/concept-map.md](./docs/concept-map.md) — every AI concept in the course, in plain terms, mapped to the part of Scholar that teaches it.
+3. Read [Week 1](./posts/01-what-is-ai-engineering.md).
+4. Fork this repo and follow along. By Week 14 you'll have a deployed SaaS.
 
 ## Contributing
 

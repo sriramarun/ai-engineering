@@ -219,10 +219,10 @@ Scope is bigger. Each week has to cover more ground. That's why the plan grew fr
 
 Not every reader will follow through to launch. The design assumption is that a reader who stops after Week 10 still has a working, deployed, single-tenant version of Scholar — the customer-app parts (auth, billing, launch) are additive. This is deliberate. The customer-app arc is the strongest version of the course for readers who go all the way, without punishing readers who don't.
 
-Two decisions I'd still like your call on before drafting Week 1:
+## Settled decisions
 
-**One.** Does *Scholar* land as the product name for the course, or do you want a different working name? (It can change later without cost; the repo name is what matters, and `scholar` is fine.)
+**Product name.** *Scholar* is the product name for the course and stays that way. The repo is `ai-engineering`; the app inside it is Scholar.
 
-**Two.** Is Week 1's target reader "a working developer with no LLM experience" or "a working developer who has shipped LLM features but not systematically"? The plan works for both, but the *hook* of Week 1 is written differently depending on which is primary.
+**Target reader.** Both — handled by the two-audience layering principle above rather than by picking one. Week 1 is written for a working developer with no LLM experience, with `> If you already know X, skip to Y` callouts so a senior engineer who has shipped LLM features can move fast without a separate track.
 
-Once those two are set, Week 1 and Week 2 draft cleanly and the repo scaffolding (README, SYLLABUS, LICENSE, CONTRIBUTING, starter Next.js app) can be built in parallel.
+**Concept coverage.** See [docs/concept-map.md](./docs/concept-map.md) for every AI concept in the course mapped to the part of Scholar that teaches it.
