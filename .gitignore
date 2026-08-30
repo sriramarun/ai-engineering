@@ -62,3 +62,6 @@ next-env.d.ts
 tmp/
 temp/
 .cache/
+
+# Reader's personal self-assessment (Week 1) — keep it out of upstream
+docs/my-assessment.md
