@@ -1,5 +1,5 @@
 ---
-post: 8
+week: 8
 title: "Evaluation-Driven Development"
 slug: "evaluation-driven-development"
 pillar: "Pillar 1, sub-skill 4: Evaluation-driven development"
@@ -10,7 +10,7 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Post 8. Evaluation-Driven Development
+# Week 8. Evaluation-Driven Development
 
 > **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
 
@@ -24,7 +24,7 @@ _The commit, PR, or deployed change this post ends with._
 
 ## Prerequisites
 
-- Post 7 completed.
+- Week 7 completed.
 - Repo up to date with `main`.
 
 ## Reading time

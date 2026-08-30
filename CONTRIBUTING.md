@@ -10,7 +10,7 @@ Thanks for considering a contribution. This course is written in public and gets
 
 **New examples or expanded sections.** Open an issue first so we can talk about scope before you write. New examples must include an eval or a test.
 
-**New posts (e.g., Post 15 on multi-modal).** Open an issue with the working title, the pillar of Ng's Skills Map it maps to, an outline in the style of the existing posts, and the artifact readers will build. Approved outlines get a `post: <slug>` label and can be drafted as PRs.
+**New posts (e.g., Week 15 on multi-modal).** Open an issue with the working title, the pillar of Ng's Skills Map it maps to, an outline in the style of the existing posts, and the artifact readers will build. Approved outlines get a `post: <slug>` label and can be drafted as PRs.
 
 **Translations.** Open an issue with the target language and confirmation of maintainer availability (translations that go stale hurt more than help).
 

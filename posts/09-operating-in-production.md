@@ -1,5 +1,5 @@
 ---
-post: 9
+week: 9
 title: "Operating in Production"
 slug: "operating-in-production"
 pillar: "Pillar 1, sub-skill 5: Operating in production"
@@ -10,7 +10,7 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Post 9. Operating in Production
+# Week 9. Operating in Production
 
 > **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
 
@@ -24,7 +24,7 @@ _The commit, PR, or deployed change this post ends with._
 
 ## Prerequisites
 
-- Post 8 completed.
+- Week 8 completed.
 - Repo up to date with `main`.
 
 ## Reading time

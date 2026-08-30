@@ -1,5 +1,5 @@
 ---
-post: 14
+week: 14
 title: "Launch, Iterate, Keep Learning"
 slug: "launch-and-learn"
 pillar: "Pillar 4: Shaping the Build"
@@ -10,7 +10,7 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Post 14. Launch, Iterate, Keep Learning
+# Week 14. Launch, Iterate, Keep Learning
 
 > **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
 
@@ -24,7 +24,7 @@ _The commit, PR, or deployed change this post ends with._
 
 ## Prerequisites
 
-- Post 13 completed.
+- Week 13 completed.
 - Repo up to date with `main`.
 
 ## Reading time

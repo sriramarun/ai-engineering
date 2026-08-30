@@ -1,5 +1,5 @@
 ---
-post: 7
+week: 7
 title: "Building Agentic Systems"
 slug: "agentic-systems"
 pillar: "Pillar 1, sub-skill 3: Building agentic systems"
@@ -10,7 +10,7 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Post 7. Building Agentic Systems
+# Week 7. Building Agentic Systems
 
 > **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
 
@@ -24,7 +24,7 @@ _The commit, PR, or deployed change this post ends with._
 
 ## Prerequisites
 
-- Post 6 completed.
+- Week 6 completed.
 - Repo up to date with `main`.
 
 ## Reading time

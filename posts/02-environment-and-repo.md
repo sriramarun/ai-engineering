@@ -1,5 +1,5 @@
 ---
-post: 2
+week: 2
 title: "Your AI Engineering Environment"
 slug: "environment-and-repo"
 pillar: "Pillar 2: Software Engineering Fundamentals"
@@ -10,7 +10,7 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Post 2. Your AI Engineering Environment
+# Week 2. Your AI Engineering Environment
 
 > **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
 
@@ -24,7 +24,7 @@ _The commit, PR, or deployed change this post ends with._
 
 ## Prerequisites
 
-- Post 1 completed.
+- Week 1 completed.
 - Repo up to date with `main`.
 
 ## Reading time

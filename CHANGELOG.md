@@ -15,6 +15,6 @@ Format inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Pos
 - Stack declared: Next.js 15 + TypeScript + Tailwind + shadcn/ui + Supabase + OpenRouter + Vercel + Stripe + Sentry + Langfuse + Vitest + Playwright.
 
 ### Planned
-- Post 01: What AI Engineering Is (and Isn't) — Reading the Skills Map.
-- Post 02: Your AI Engineering Environment.
+- Week 1: What AI Engineering Is (and Isn't) — Reading the Skills Map.
+- Week 2: Your AI Engineering Environment.
 - Full syllabus in [SYLLABUS.md](./SYLLABUS.md).

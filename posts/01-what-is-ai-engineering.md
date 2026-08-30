@@ -1,5 +1,5 @@
 ---
-post: 1
+week: 1
 title: "What AI Engineering Is (and Isn't) — Reading the Skills Map"
 slug: "what-is-ai-engineering"
 pillar: "Introduction — all four pillars"
@@ -10,7 +10,7 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Post 1. What AI Engineering Is (and Isn't) — Reading the Skills Map
+# Week 1. What AI Engineering Is (and Isn't) — Reading the Skills Map
 
 > **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
 
@@ -24,7 +24,7 @@ _The commit, PR, or deployed change this post ends with._
 
 ## Prerequisites
 
-- Post 1 completed.
+- None — this is the first week.
 - Repo up to date with `main`.
 
 ## Reading time

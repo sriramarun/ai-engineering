@@ -1,5 +1,5 @@
 ---
-post: 6
+week: 6
 title: "Using Coding Agents Effectively"
 slug: "coding-agents"
 pillar: "Pillar 3: Using Coding Agents"
@@ -10,7 +10,7 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Post 6. Using Coding Agents Effectively
+# Week 6. Using Coding Agents Effectively
 
 > **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
 
@@ -24,7 +24,7 @@ _The commit, PR, or deployed change this post ends with._
 
 ## Prerequisites
 
-- Post 5 completed.
+- Week 5 completed.
 - Repo up to date with `main`.
 
 ## Reading time

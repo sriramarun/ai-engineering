@@ -1,5 +1,5 @@
 ---
-post: 3
+week: 3
 title: "LLM Foundations via OpenRouter"
 slug: "llm-foundations"
 pillar: "Pillar 1, sub-skill 1: LLM foundations"
@@ -10,7 +10,7 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Post 3. LLM Foundations via OpenRouter
+# Week 3. LLM Foundations via OpenRouter
 
 > **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
 
@@ -24,7 +24,7 @@ _The commit, PR, or deployed change this post ends with._
 
 ## Prerequisites
 
-- Post 2 completed.
+- Week 2 completed.
 - Repo up to date with `main`.
 
 ## Reading time

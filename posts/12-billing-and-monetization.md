@@ -1,5 +1,5 @@
 ---
-post: 12
+week: 12
 title: "Billing, Usage, and Monetization"
 slug: "billing-and-monetization"
 pillar: "Pillar 4: Shaping the Build (business dimension)"
@@ -10,7 +10,7 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Post 12. Billing, Usage, and Monetization
+# Week 12. Billing, Usage, and Monetization
 
 > **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
 
@@ -24,7 +24,7 @@ _The commit, PR, or deployed change this post ends with._
 
 ## Prerequisites
 
-- Post 11 completed.
+- Week 11 completed.
 - Repo up to date with `main`.
 
 ## Reading time

@@ -1,6 +1,6 @@
 # Runbook
 
-Operational playbook for Scholar in production. Started skeletal; filled in for real in Post 09 (Operating in Production) and grown from there.
+Operational playbook for Scholar in production. Started skeletal; filled in for real in Week 9 (Operating in Production) and grown from there.
 
 ## Where things live
 
@@ -25,16 +25,16 @@ Operational playbook for Scholar in production. Started skeletal; filled in for 
 Likely OpenRouter or a specific provider outage. The model router (`lib/llm/router.ts`) should be falling over to the next model in the chain. If it isn't, check `OPENROUTER_FALLBACK_MODELS` is set in Vercel env.
 
 ### Latency spike
-Check Langfuse for slow traces. Common causes: retrieval returning too many chunks (Post 05), a model swap that pulled in a slower model (Post 03), a Supabase query missing an index (Post 05, 11).
+Check Langfuse for slow traces. Common causes: retrieval returning too many chunks (Week 5), a model swap that pulled in a slower model (Week 3), a Supabase query missing an index (Week 5, 11).
 
 ### Cost spike
-Check OpenRouter activity dashboard for the top spender. Common causes: a runaway agent loop (Post 07 — add a max-iterations guard), a user hitting an unmetered endpoint (Post 12 — check rate limiter), a debug prompt with the full corpus in context (Post 05).
+Check OpenRouter activity dashboard for the top spender. Common causes: a runaway agent loop (Week 7 — add a max-iterations guard), a user hitting an unmetered endpoint (Week 12 — check rate limiter), a debug prompt with the full corpus in context (Week 5).
 
 ### Auth failing
-Supabase Auth logs first. Common causes: OAuth provider credentials expired, magic-link email deliverability, RLS policy blocking the right user (Post 11).
+Supabase Auth logs first. Common causes: OAuth provider credentials expired, magic-link email deliverability, RLS policy blocking the right user (Week 11).
 
 ### Prompt injection suspected
-Isolate the offending request from Langfuse traces. Rotate any leaked credentials immediately. Add the payload to the eval suite (Post 08, 09) so the regression is caught next time.
+Isolate the offending request from Langfuse traces. Rotate any leaked credentials immediately. Add the payload to the eval suite (Week 8, 09) so the regression is caught next time.
 
 ## Escalation
 

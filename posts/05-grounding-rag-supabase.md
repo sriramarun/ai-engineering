@@ -1,5 +1,5 @@
 ---
-post: 5
+week: 5
 title: "Grounding Models with Data — RAG on Supabase"
 slug: "grounding-rag-supabase"
 pillar: "Pillar 1, sub-skill 2: Grounding models with data"
@@ -10,7 +10,7 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Post 5. Grounding Models with Data — RAG on Supabase
+# Week 5. Grounding Models with Data — RAG on Supabase
 
 > **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
 
@@ -24,7 +24,7 @@ _The commit, PR, or deployed change this post ends with._
 
 ## Prerequisites
 
-- Post 4 completed.
+- Week 4 completed.
 - Repo up to date with `main`.
 
 ## Reading time

@@ -1,5 +1,5 @@
 ---
-post: 4
+week: 4
 title: "Software Engineering Fundamentals for AI Systems"
 slug: "software-fundamentals"
 pillar: "Pillar 2: Software Engineering Fundamentals"
@@ -10,7 +10,7 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Post 4. Software Engineering Fundamentals for AI Systems
+# Week 4. Software Engineering Fundamentals for AI Systems
 
 > **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
 
@@ -24,7 +24,7 @@ _The commit, PR, or deployed change this post ends with._
 
 ## Prerequisites
 
-- Post 3 completed.
+- Week 3 completed.
 - Repo up to date with `main`.
 
 ## Reading time

@@ -1,5 +1,5 @@
 ---
-post: 13
+week: 13
 title: "Shaping the Build — Product Sense for AI Engineers"
 slug: "shaping-the-build"
 pillar: "Pillar 4: Shaping the Build"
@@ -10,7 +10,7 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Post 13. Shaping the Build — Product Sense for AI Engineers
+# Week 13. Shaping the Build — Product Sense for AI Engineers
 
 > **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
 
@@ -24,7 +24,7 @@ _The commit, PR, or deployed change this post ends with._
 
 ## Prerequisites
 
-- Post 12 completed.
+- Week 12 completed.
 - Repo up to date with `main`.
 
 ## Reading time
