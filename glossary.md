@@ -18,9 +18,7 @@ Shared vocabulary for the course. One definition per term, referenced by every p
 
 **LLM-as-judge.** Using an LLM to score another LLM's output against a rubric. Cheap and scalable; honest only when the rubric is precise and the judge is validated against human scores. Introduced in Week 9.
 
-**Anthropic API.** Scholar's model layer. Structured outputs, tool use, prompt caching, and the effort dial are first-class, which is why the course builds on it directly rather than through a proxy.
-
-**OpenRouter.** A provider-agnostic API kept in the stack for one job: the Week 9 A/B across model families, and as a fallback path.
+**OpenRouter.** Scholar's model layer: one provider-agnostic API in front of every frontier and open model, so switching model or model family is a configuration change rather than a migration. Introduced in Week 2, wrapped in `lib/llm/` in Week 3.
 
 **Prompt injection.** An attack where user-supplied input contains instructions that hijack the model's behavior. Defenses discussed in Week 11.
 
@@ -56,7 +54,7 @@ Shared vocabulary for the course. One definition per term, referenced by every p
 
 **MCP (Model Context Protocol).** An open protocol for exposing tools, resources, and prompts to any agent, so an integration is written once rather than per tool. Scholar gets its own MCP server in Week 7.
 
-**Model policy.** The typed decision about which model handles which task, based on cost, latency, and quality — replacing a hardcoded model string. Introduced in Week 3.
+**Model policy.** The typed decision about which model handles which task, based on cost, latency, and quality — replacing a hardcoded model string. Lives in `lib/llm/`, which is the only part of Scholar that knows who the provider is. Introduced in Week 3.
 
 **Plan mode.** A read-only agent mode: it investigates and proposes, and changes nothing. Introduced in Week 0.
 

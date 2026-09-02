@@ -101,7 +101,7 @@ Any teaching project has to be chosen carefully, because the product decides whi
 - **It needs agentic behaviour**, because a real research question isn't one search. That gives you a genuine reason to build a planning loop rather than a toy one.
 - **Quality is measurable**, which makes evals honest: did it cite the right passage, yes or no? Compare that to "write me a poem," where you cannot build a regression suite.
 - **It has real users with real data**, which forces multi-tenancy, row-level security, and privacy — the parts most tutorials skip entirely.
-- **It costs money to run**, so cost control and metering aren't hypothetical. You will watch your own API spend and decide what to do about it.
+- **It costs money to run**, so cost control and metering aren't hypothetical. You will watch your own model spend and decide what to do about it.
 - **People actually want it.** You can plausibly launch this and get users, which makes Weeks 13 and 14 real rather than performative.
 
 ### What it looks like at each stage
@@ -124,13 +124,13 @@ You do not build all of it at once. Each week Scholar becomes a slightly more se
 
 ### The stack, in one paragraph
 
-Next.js and TypeScript for the app, Supabase for auth and Postgres and file storage and vector search, the Anthropic API for model access, Vercel for deployment, Stripe for billing, Semgrep for scanning, Langfuse and Sentry for observability. Claude Code is the agent you build it all with. Every choice is defensible for a real product, and the full reasoning is in [SYLLABUS.md](../SYLLABUS.md); the short version is that this stack lets you spend your attention on AI engineering rather than on infrastructure.
+Next.js and TypeScript for the app, Supabase for auth and Postgres and file storage and vector search, OpenRouter for model access, Vercel for deployment, Stripe for billing, Semgrep for scanning, Langfuse and Sentry for observability. Claude Code is the agent you build it all with. Every choice is defensible for a real product, and the full reasoning is in [SYLLABUS.md](../SYLLABUS.md); the short version is that this stack lets you spend your attention on AI engineering rather than on infrastructure.
 
 Two choices worth calling out now.
 
 **Claude Code** is the coding agent, and the course commits to it rather than hedging. Weeks 6, 7, and 10 teach it directly — context engineering, building an MCP server it can use, and reviewing what it writes. Set it up first: [Week 0](./00-setup-claude-code.md). It is a paid tool, and this course would rather say that plainly than build fourteen weeks on a free tier that can be withdrawn — which is exactly what happened to the agent an earlier draft recommended.
 
-**The Anthropic API** is how Scholar itself talks to a model. Structured outputs, tool use, prompt caching, and the effort dial are all first-class there, and those are the four things Week 3 is built on. A second provider stays wired up for one job — the Week 9 A/B across model families — because a course that never shows you another model teaches you to assume rather than measure.
+**OpenRouter** is how Scholar itself talks to a model — one API in front of every frontier and open model, so switching model, or model *family*, is a string change rather than an SDK migration. That is not convenience for its own sake. Week 9 asks you to A/B two models on your own eval set and see the difference yourself; Week 11 turns model choice into a live cost lever. Neither exercise is comfortable if changing model means changing library. Note the shape of this: the thing you actually build in Week 3 is `lib/llm/`, the seam. Every later week talks to that, not to a vendor.
 
 ---
 
@@ -207,4 +207,4 @@ $0. No accounts, no keys, no API calls.
 
 ## Next week
 
-[Week 2 — Your AI Engineering Environment](./02-environment-and-repo.md): Node, pnpm, an Anthropic API key, a Supabase project, and a Vercel deployment. You end next week with a public URL that streams a real answer.
+[Week 2 — Your AI Engineering Environment](./02-environment-and-repo.md): Node, pnpm, an OpenRouter key, a Supabase project, and a Vercel deployment. You end next week with a public URL that streams a real answer.

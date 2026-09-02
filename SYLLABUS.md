@@ -17,8 +17,7 @@ A 14-week, bi-weekly, open-source course that teaches AI engineering by building
 | Runtime | Node.js + TypeScript | Same language front-to-back; type safety matters more in AI apps than most people admit |
 | Framework | Next.js 15 (App Router) | RSC + streaming + edge in one framework; deploys cleanly to Vercel |
 | UI | React + Tailwind + shadcn/ui | Ubiquitous, easy to copy-paste-adapt, honest defaults |
-| Model access | **Anthropic API** (`@anthropic-ai/sdk`) | Structured outputs, tool use, prompt caching, and the effort dial are all first-class; matches what the certification examines |
-| Second provider | OpenRouter | Kept for one job: the Week 9 A/B across model families, and as an honest fallback path |
+| Model access | **OpenRouter** | One API in front of every frontier and open model, so swapping models is a string change. Passes through the things this course leans on: `cache_control` breakpoints, a normalised `reasoning` parameter, JSON-schema structured outputs, tool calling |
 | Coding agent | **Claude Code** | Taught directly in Weeks 6, 7, and 10 |
 | Auth | Supabase Auth | Free tier is enough; RLS integrates with the DB |
 | Database | Supabase Postgres | Includes pgvector for embeddings; one system instead of Postgres + a vector DB |
@@ -91,12 +90,12 @@ Each week is one post, one chapter, and one working artifact. Posts publish bi-w
 *Mental model + course intro.* The four pillars, what separates AI engineers from ML engineers and from vibe coders, and how the certification domains map onto them. Introduces Scholar and the reasoning behind the stack. Self-assessment across the four pillars, redone in Week 14. Ends with the reader forking the repo and pushing a first commit.
 
 **Week 2. Your AI Engineering Environment**
-*Technical setup.* Node + TypeScript, pnpm, a branching strategy that scales past one contributor, an Anthropic API key, a Supabase project, a Vercel project linked to the repo. First streamed model call through a route handler, first migration, first preview deploy. Reader ends the week with a public URL that streams a real answer.
+*Technical setup.* Node + TypeScript, pnpm, a branching strategy that scales past one contributor, an OpenRouter key, a Supabase project, a Vercel project linked to the repo. First streamed model call through a route handler, first migration, first preview deploy. Reader ends the week with a public URL that streams a real answer.
 
 ### Module 2 — Model Foundations + Software Fundamentals (Weeks 3–4)
 
-**Week 3. Claude API Foundations**
-*Mental model.* What a model is at the API boundary. Tokens, context windows, and the context budget as a number your code enforces. Structured outputs via `output_config.format` and Zod. Tool use. Adaptive thinking and the effort dial. Prompt caching treated as architecture — what goes in the stable prefix and what must come after it. Choosing between Opus, Sonnet, and Haiku per task rather than globally. Reader builds `lib/llm/`: a typed client with a per-task model policy, a cached system prefix, and schema-validated output.
+**Week 3. Model Foundations via OpenRouter**
+*Mental model.* What a model is at the API boundary. Tokens, context windows, and the context budget as a number your code enforces. Structured outputs — `response_format` with a JSON schema, validated again with Zod on the way in, because `strict` is a promise not every endpoint keeps. Tool calling. The `reasoning` parameter and what effort actually buys. Prompt caching treated as architecture: `cache_control` breakpoints, what belongs in the stable prefix, and what must come after it. Choosing a model per task rather than once, globally. Reader builds `lib/llm/`: a typed client with a per-task model policy, a cached system prefix, schema-validated output, and a fallback chain.
 
 **Week 4. Software Engineering Fundamentals for AI Systems**
 *Technical.* The tradeoff table — cost, latency, reliability, quality, privacy — and where each lands in this stack. RSC vs. server actions vs. route handlers. Zod as the contract at every boundary. Testing what's nondeterministic: snapshot the deterministic parts, evaluate the rest. Structured logging from day one. And static analysis on agent-written code with Semgrep, which catches a category review reliably misses. Reader refactors into a proper module layout, adds Vitest, adds a typed API route, and fixes three real Semgrep findings in CI.
@@ -232,7 +231,9 @@ Publication rhythm: post drops Tuesday morning, companion PR merged into the pub
 
 **Coding agent.** Claude Code, single-agent by design, taught directly rather than mentioned.
 
-**Model access.** The Anthropic API is Scholar's primary model layer. OpenRouter stays in the stack for the Week 9 cross-family A/B and as a fallback path — multi-provider fallback is good practice as well as good pedagogy.
+**Model access.** **OpenRouter**, deliberately. Scholar talks to models through one provider-agnostic API so switching model — or model *family* — is a configuration change, not a migration. That matters twice: Week 9 asks you to A/B two models on your own eval set and see the difference for yourself, and Week 11 makes model choice a live cost lever. The `lib/llm/` module built in Week 3 is the seam; every other week talks to that, not to a vendor SDK.
+
+The honest tradeoff: provider-native surfaces sometimes move faster than a proxy's normalisation of them, and structured-output `strict` compliance varies by endpoint. Week 3 handles both the way a real system should — validate every response with Zod regardless of what the provider promised, and pin `require_parameters` so you don't silently land on an endpoint missing a feature you rely on.
 
 **Target reader.** Both audiences, handled by the two-audience layering principle rather than by picking one.
 

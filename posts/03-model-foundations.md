@@ -1,7 +1,7 @@
 ---
 week: 3
-title: "Claude API Foundations"
-slug: "claude-api-foundations"
+title: "Model Foundations via OpenRouter"
+slug: "model-foundations"
 pillar: "Pillar 1: Building AI Applications — LLM foundations"
 certification: "Prompt Engineering & Structured Output; Context Management"
 status: draft
@@ -17,11 +17,11 @@ word_target: 3000
 
 ## What this week covers
 
-Tokens, context windows, and the context budget. Structured outputs with `output_config.format` and Zod. Tool use. Adaptive thinking and the `effort` dial. Prompt caching as a first-class design concern, not an optimisation. Choosing between Opus, Sonnet, and Haiku per task.
+What a model is at the API boundary. Tokens, context windows, and the context budget. Structured outputs — `response_format` with a JSON schema, then Zod on the way in, because `strict` is a promise not every endpoint keeps. Tool calling. The `reasoning` parameter and what effort actually buys. Prompt caching as a design concern, not an optimisation: `cache_control` breakpoints and what belongs in the stable prefix. Choosing a model per task — and why the seam that lets you swap one matters more than which you picked today.
 
 ## What you'll build
 
-`lib/llm/` — a typed Claude client with a per-task model policy, a cached system prompt, and Zod-validated structured output on every response.
+`lib/llm/` — a typed OpenRouter client with a per-task model policy, a cached system prefix, Zod-validated structured output on every response, and a fallback chain.
 
 ## Prerequisites
 

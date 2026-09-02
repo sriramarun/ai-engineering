@@ -68,10 +68,11 @@ document-grounded research SaaS.
 
 ## Stack
 Next.js 15 App Router, TypeScript, Supabase (Postgres + pgvector + Auth + Storage),
-the Anthropic API for model access, Vercel for deploys.
+OpenRouter for model access, Vercel for deploys.
 
 ## Rules
 - Never call a model from a client component. Model calls go through route handlers in app/api/.
+- All model access goes through lib/llm/. Do not import a provider SDK anywhere else.
 - Validate every model response with a Zod schema before using it.
 - No secrets in code. Read from process.env; add new keys to .env.example with a comment.
 - Never read or edit .env.local. Never run commands against the hosted Supabase project.
@@ -103,7 +104,7 @@ The most useful setting, and the one nobody explains before you need it: how muc
 
 **Start in plan mode for anything you don't fully understand.** It costs nothing, it's the cheapest way to learn what the agent can actually see, and a plan you've read is a far better prompt than the request you started with.
 
-This matters more in this repo than most: from Week 2 you have an `ANTHROPIC_API_KEY` in `.env.local` and a Supabase `service_role` key that bypasses row-level security. The `CLAUDE.md` above tells the agent to leave them alone. Permission modes are what enforce it when the agent forgets.
+This matters more in this repo than most: from Week 2 you have an `OPENROUTER_API_KEY` in `.env.local` and a Supabase `service_role` key that bypasses row-level security. The `CLAUDE.md` above tells the agent to leave them alone. Permission modes are what enforce it when the agent forgets.
 
 ## 4. The commands worth knowing on day one
 

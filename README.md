@@ -1,6 +1,6 @@
 # AI Engineering Course
 
-Learn AI engineering by building one real, deployable, customer-facing SaaS product end to end — with **Claude Code** as your pair, and the **Claude Certified Architect – Foundations** domains as a second spine.
+Learn AI engineering by building one real, deployable, customer-facing SaaS product end to end — with **Claude Code** as your pair, and the **Claude Certified Architect – Foundations** domains as a second spine. The app itself talks to models through **OpenRouter**, so swapping a model is a string change rather than a migration.
 
 Modelled on Stanford's *Startup Engineering* (2013), aligned with Andrew Ng's *AI Engineering Skills Map* (2026), and sharpened by Stanford's *CS146S: The Modern Software Developer* (2025). Every week ends with a commit, not a concept.
 
@@ -30,12 +30,12 @@ Each week is one post, one chapter, and one working artifact you can run. Posts 
 The four pillars, what separates AI engineers from ML engineers and from vibe coders, and how the certification domains map onto them. Introduces Scholar and the stack. *Artifact: fork the repo, push your first commit.*
 
 **Week 2 · [Your AI Engineering Environment](./posts/02-environment-and-repo.md)**
-Node + TypeScript, pnpm, a branching strategy that survives contributors, an Anthropic API key, Supabase, Vercel. *Artifact: a public preview URL that streams a real answer.*
+Node + TypeScript, pnpm, a branching strategy that survives contributors, an OpenRouter key, Supabase, Vercel. *Artifact: a public preview URL that streams a real answer.*
 
 ### Module 2 — Model Foundations + Software Fundamentals
 
-**Week 3 · [Claude API Foundations](./posts/03-claude-api-foundations.md)**
-Tokens, context windows, and the context budget. Structured outputs with Zod. Tool use. Adaptive thinking and the effort dial. Prompt caching as architecture. Choosing a model per task. *Artifact: `lib/llm/` — a typed client with a model policy, a cached prefix, and schema-validated output.*
+**Week 3 · [Model Foundations via OpenRouter](./posts/03-model-foundations.md)**
+Tokens, context windows, and the context budget. Structured outputs, validated with Zod. Tool calling. The reasoning/effort dial. Prompt caching as architecture. Choosing a model per task — and swapping one without a migration. *Artifact: `lib/llm/` — a typed client with a model policy, a cached prefix, schema-validated output, and a fallback chain.*
 
 **Week 4 · [Software Engineering Fundamentals for AI Systems](./posts/04-software-fundamentals.md)**
 The cost/latency/reliability/quality/privacy tradeoff. Zod at every boundary. Testing what's nondeterministic. Static analysis on agent-written code with Semgrep. *Artifact: a proper module layout, Vitest, a typed API route, and three real Semgrep findings fixed in CI.*
@@ -80,7 +80,7 @@ Why the spec is the work. Customer development. Deciding "good enough to ship" w
 
 ## The stack
 
-Next.js 15 · TypeScript · Tailwind · shadcn/ui · Supabase (Auth + Postgres + pgvector + Storage) · Anthropic API · Claude Code · MCP · Vercel · Stripe · Semgrep · Sentry + Langfuse · Vitest + Playwright · GitHub Actions
+Next.js 15 · TypeScript · Tailwind · shadcn/ui · Supabase (Auth + Postgres + pgvector + Storage) · OpenRouter · Claude Code · MCP · Vercel · Stripe · Semgrep · Sentry + Langfuse · Vitest + Playwright · GitHub Actions
 
 Full rationale in [SYLLABUS.md](./SYLLABUS.md). Claude Code is a paid tool — the course says so up front rather than building on a free tier that can be withdrawn.
 

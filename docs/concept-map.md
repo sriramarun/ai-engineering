@@ -18,7 +18,7 @@ flowchart TB
     CHAT --> AGENT["Agentic loop<br/><i>plan → tool → verify</i> · Week 8"]
     AGENT -->|search tool| VEC
     AGENT --> LLMC["lib/llm — model policy<br/><i>caching + structured output</i> · Week 3"]
-    LLMC --> API([Anthropic API])
+    LLMC --> API([OpenRouter → any model])
 
     AGENT --> ANS["Cited answer<br/><i>grounding + provenance</i> · Week 5"]
     ANS --> U
@@ -48,11 +48,11 @@ Solid arrows are the request path. Dotted arrows are the disciplines wrapped aro
 | Tokens | The chunks of text a model reads and bills you for — roughly ¾ of a word each | Counted before a call so a request can't blow the budget |
 | Context window | The model's working memory: everything it can see at once | The cap the retrieval step must fit inside |
 | Context budget | A deliberate split of that window across system prompt, retrieved chunks, history, and answer | A named constant in `lib/llm/`, enforced in code |
-| Structured output | Making the model return JSON matching a schema instead of prose | Zod schemas on every model response boundary |
+| Structured output | Making the model return JSON matching a schema instead of prose | A JSON-schema `response_format`, re-validated with Zod because `strict` isn't honoured everywhere |
 | Tool use | Letting the model ask your code to run a function and hand back the result | `search`, `read_document`, `cite` — the tools Scholar's agent uses |
-| Adaptive thinking & effort | Letting the model reason before answering, and dialling how hard it works | High effort for research synthesis, low for routing |
+| Reasoning & effort | Letting the model reason before answering, and dialling how hard it works | High effort for research synthesis, low for routing |
 | Prompt caching | Reusing an unchanged prefix across calls so you don't pay full price twice | A frozen system prefix; volatile content ordered after it |
-| Model policy | Picking a model per task on cost, speed, and quality — not once, globally | The routing table in `lib/llm/` |
+| Model policy | Picking a model per task on cost, speed, and quality — not once, globally | The routing table in `lib/llm/`, one string per task |
 
 ### Grounding with data — RAG (Week 5)
 
@@ -94,7 +94,7 @@ Solid arrows are the request path. Dotted arrows are the disciplines wrapped aro
 |---|---|---|
 | Cost control | Caching, effort, quotas, cheaper models where quality allows | Enforced per request, tracked per user |
 | Latency engineering | Streaming, edge, prefetching — making it *feel* fast | Streamed answers from the first token |
-| Reliability | Retries, fallbacks, circuit breakers, a second provider | The fallback chain in `lib/llm/` |
+| Reliability | Retries, fallbacks, circuit breakers, another model when one provider is down | The fallback chain in `lib/llm/` |
 | Observability | Traces (what the model did), errors (what broke), metrics (what users felt) | Langfuse + Sentry + Vercel Analytics |
 | Prompt injection | User-supplied text that hijacks the model's instructions | Defended on every path where uploaded text reaches a prompt |
 | PII handling | Knowing what personal data you hold and keeping it out of logs and prompts | Redaction before tracing |

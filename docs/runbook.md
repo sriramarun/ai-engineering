@@ -6,7 +6,7 @@ Operational playbook for Scholar in production. Started skeletal; filled in for 
 
 - **App:** Vercel — [dashboard](https://vercel.com/dashboard)
 - **Database, auth, storage:** Supabase — [dashboard](https://supabase.com/dashboard)
-- **Model traffic:** Anthropic Console — [usage dashboard](https://console.anthropic.com/settings/usage)
+- **Model traffic:** OpenRouter — [activity dashboard](https://openrouter.ai/activity)
 - **Errors:** Sentry
 - **LLM traces:** Langfuse
 - **Billing:** Stripe
@@ -16,13 +16,13 @@ Operational playbook for Scholar in production. Started skeletal; filled in for 
 1. Is the site up? Check [status.scholar.example](https://status.scholar.example) and hit the homepage.
 2. Check Sentry for a spike in errors in the last 15 minutes.
 3. Check Vercel deployment log for the most recent deploy.
-4. Check the Anthropic status page — provider outages are the single most common source of AI-app incidents.
+4. Check OpenRouter's status and the upstream provider's — provider outages are the single most common source of AI-app incidents.
 5. Check Supabase status page.
 
 ## Common incidents
 
 ### LLM calls failing with 5xx
-Likely a provider outage or a rate limit. The model policy (`lib/llm/`) should be falling back to the next model in the chain, and then to the second provider. If it isn't, check the fallback config is set in Vercel env.
+Likely an upstream provider outage or a rate limit. The model policy (`lib/llm/`) should be falling back to the next model in the chain. If it isn't, check `OPENROUTER_FALLBACK_MODELS` is set in Vercel env.
 
 ### Latency spike
 Check Langfuse for slow traces. Common causes: retrieval returning too many chunks (Week 5), a model swap that pulled in a slower model (Week 3), a Supabase query missing an index (Week 5, 11).
