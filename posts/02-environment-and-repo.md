@@ -3,6 +3,7 @@ week: 2
 title: "Your AI Engineering Environment"
 slug: "environment-and-repo"
 pillar: "Pillar 2: Software Engineering Fundamentals"
+certification: "Claude Code Workflows; Context Management"
 status: draft
 author: "Sriram Krishnan"
 published:
@@ -18,34 +19,36 @@ Most tutorials treat setup as an obstacle between you and the interesting part. 
 
 By the end of this post you will have a public URL — a real one, on the internet — that takes a question and streams back an answer from a real model. Roughly two hours, mostly waiting for installs.
 
-> **If you already have a Next.js + Supabase + Vercel setup you're happy with,** skip to [Talking to a model](#talking-to-a-model) and just take the OpenRouter and env-var conventions.
+> **If you already have a Next.js + Supabase + Vercel setup you're happy with,** skip to [Talking to a model](#talking-to-a-model) and just take the env-var conventions.
+>
+> **If you haven't done [Week 0](./00-setup-claude-code.md) yet,** do it first — this week assumes Claude Code is installed and your `CLAUDE.md` exists.
 
 ---
 
 ## What you'll have at the end
 
 - Node 20+, pnpm, and the repo running locally on `localhost:3000`
-- A coding agent configured with this repo's conventions
-- An OpenRouter key and a working streamed LLM call
+- Claude Code working in the repo, with the `CLAUDE.md` you wrote in Week 0
+- An Anthropic API key and a working streamed model call
 - A Supabase project, the local Supabase stack, and your first migration applied
 - A Vercel project linked to your fork, with preview deploys on every branch
 - One merged PR
 
 ## Accounts you'll need
 
-Create these first; the sign-ups are the slow part. All four have free tiers that carry the whole course.
+Create these first; the sign-ups are the slow part. Three of the four are free for the whole course; the model API is metered and cheap at this stage.
 
 | Service | What for | Cost |
 |---|---|---|
 | [GitHub](https://github.com) | The repo, CI, and Vercel's trigger | Free |
-| [OpenRouter](https://openrouter.ai) | Model access, all providers, one key | Pay-as-you-go — start with $10 |
+| [Anthropic Console](https://console.anthropic.com) | Model access for Scholar itself | Pay-as-you-go — start with $10 |
 | [Supabase](https://supabase.com) | Postgres, auth, storage, vectors | Free tier |
 | [Vercel](https://vercel.com) | Hosting and preview deploys | Hobby tier, free |
 
-Total spend to finish this post: **under $0.10 of OpenRouter credit.**
+Total spend to finish this post: **under $0.10 of API credit.**
 
 > 📸 **Screenshot slot** — `docs/screenshots/week-02-accounts.png`
-> *Capture: the four dashboards side by side after sign-up, with any keys, project refs, and billing details cropped or blurred out.*
+> *Capture: the four dashboards side by side after sign-up, with any keys, project refs, account emails, and billing details cropped out.*
 
 ---
 
@@ -107,7 +110,7 @@ Open `http://localhost:3000`. You should see the marketing page from `app/(marke
 > 📸 **Screenshot slot** — `docs/screenshots/week-02-localhost-hello.png`
 > *Capture: `localhost:3000` rendering the Scholar landing page for the first time, with the terminal showing `pnpm dev` running.*
 
-**What those parentheses mean.** `app/(marketing)/` is a Next.js *route group*. The folder organises files without appearing in the URL, so `app/(marketing)/page.tsx` serves `/`, not `/marketing`. The repo uses three: `(marketing)` for logged-out pages, `(auth)` for sign-in, `(app)` for the signed-in product. It costs nothing now and saves a restructure in Week 11.
+**What those parentheses mean.** `app/(marketing)/` is a Next.js *route group*. The folder organises files without appearing in the URL, so `app/(marketing)/page.tsx` serves `/`, not `/marketing`. The repo uses three: `(marketing)` for logged-out pages, `(auth)` for sign-in, `(app)` for the signed-in product. It costs nothing now and saves a restructure in Week 12.
 
 ## 3. Secrets, three ways
 
@@ -128,7 +131,7 @@ cp .env.example .env.local
 Two rules that hold for the rest of the course:
 
 - **`NEXT_PUBLIC_` is a loaded prefix.** Any variable starting with it is compiled into the JavaScript sent to the browser. `NEXT_PUBLIC_SUPABASE_ANON_KEY` is fine there — it's designed to be public and is protected by row-level security. `OPENROUTER_API_KEY` must never carry that prefix; if it does, you have published your billing credentials to everyone who opens dev tools.
-- **The model is never called from the browser.** Every LLM call in this app goes through a server route. That's not style: it's the only way the key stays secret and the only place you can enforce a cost budget.
+- **The model is never called from the browser.** Every model call in this app goes through a server route. That's not style: it's the only way the key stays secret and the only place you can enforce a cost budget.
 
 Confirm the guard is in place before you put a real key anywhere:
 
@@ -145,80 +148,76 @@ One branch per week, one PR per week, `main` always deployable.
 git checkout -b week-02
 ```
 
-This is not ceremony for its own sake. From Week 8, CI runs your eval suite on every pull request and blocks the merge if quality regresses. That gate only works if changes arrive as PRs. Building the habit now, on trivial changes, means the machinery is already in place when it starts catching real problems.
+This is not ceremony for its own sake. From Week 9, CI runs your eval suite on every pull request and blocks the merge if quality regresses. That gate only works if changes arrive as PRs. Building the habit now, on trivial changes, means the machinery is already in place when it starts catching real problems.
 
-## 5. Configure your coding agent
+## 5. Point your agent at the repo
 
-Week 6 covers this properly. For now, give your agent the context it needs to be useful in *this* repo rather than in a generic Next.js one.
+You wrote `CLAUDE.md` in [Week 0](./00-setup-claude-code.md). Now is the moment it starts earning its keep, because the repo finally has enough in it to get wrong.
 
-Create `CLAUDE.md` at the repo root (Cursor users: `.cursorrules` with the same content):
+Two additions to that file now that the app exists:
 
 ```markdown
-# Scholar — agent context
-
-Course project for the AI Engineering series. Each week adds one slice.
-
-## Stack
-Next.js 15 App Router, TypeScript, Supabase (Postgres + pgvector + Auth + Storage),
-OpenRouter for models, Vercel for deploys.
-
-## Rules
-- Never call a model from a client component. LLM calls go through route handlers in app/api/.
-- Validate every LLM response with a Zod schema before using it.
-- No secrets in code. Read from process.env; add new keys to .env.example with a comment.
-- Migrations only via supabase/migrations/. Never edit the database by hand.
-- Run `pnpm typecheck && pnpm test` before claiming a change works.
-
-## Conventions
-- Route groups: (marketing) logged-out, (auth) sign-in, (app) signed-in product.
-- lib/llm/ model access, lib/retrieval/ RAG, lib/agents/ agent loops, lib/evals/ evals.
+- The dev server is `pnpm dev`. Do not start it yourself — ask, or assume it is running.
+- After changing app code, run `pnpm typecheck && pnpm test` before reporting success.
 ```
 
-The last rule under **Rules** is the important one. An agent that can run your checks can tell whether it succeeded; an agent that can't is guessing. That single line is most of the difference between an agent that helps and one that generates plausible-looking mess.
+Then check it's actually loaded. Start a session, run `/context`, and confirm `CLAUDE.md` appears. An agent that isn't reading your rules is an agent writing someone else's Next.js app in your repo.
+
+Keep it short. It's prepended to every request, so it's for rules, not documentation.
 
 ## 6. Talking to a model
 
-Get a key at [openrouter.ai/keys](https://openrouter.ai/keys), add $10 of credit, and put it in `.env.local`:
+Create a key at [console.anthropic.com](https://console.anthropic.com), add $10 of credit, and put it in `.env.local`:
 
 ```bash
-OPENROUTER_API_KEY=sk-or-v1-...
-OPENROUTER_DEFAULT_MODEL=anthropic/claude-sonnet-5
+ANTHROPIC_API_KEY=sk-ant-...
 ```
 
-**Why OpenRouter.** One API, one key, one bill, and every major model behind it — Anthropic, OpenAI, Google, and the open-weight models — using the OpenAI-compatible request format everything already speaks. Switching models is a string change. In Week 3 you'll build a router that picks a model per task; in Week 8 you'll A/B two of them on your own eval set. Neither is comfortable if changing model means changing SDK.
+Install the SDK:
+
+```bash
+pnpm add @anthropic-ai/sdk
+```
 
 Now the call. Create `app/api/hello-llm/route.ts`:
 
 ```ts
-export const runtime = "edge";
+import Anthropic from "@anthropic-ai/sdk";
+
+const client = new Anthropic();
 
 export async function POST(req: Request) {
   const { question } = await req.json();
 
-  const upstream = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-      "Content-Type": "application/json",
-      "HTTP-Referer": process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
-      "X-Title": "Scholar",
-    },
-    body: JSON.stringify({
-      model: process.env.OPENROUTER_DEFAULT_MODEL,
-      stream: true,
-      messages: [
-        { role: "system", content: "You are Scholar. Answer in two sentences." },
-        { role: "user", content: question },
-      ],
-    }),
+  const stream = client.messages.stream({
+    model: "claude-sonnet-5",
+    max_tokens: 1024,
+    system: "You are Scholar. Answer in two sentences.",
+    messages: [{ role: "user", content: question }],
   });
 
-  if (!upstream.ok || !upstream.body) {
-    return new Response(`Upstream error: ${upstream.status}`, { status: 502 });
-  }
+  const encoder = new TextEncoder();
+  const body = new ReadableStream({
+    async start(controller) {
+      try {
+        for await (const event of stream) {
+          if (
+            event.type === "content_block_delta" &&
+            event.delta.type === "text_delta"
+          ) {
+            controller.enqueue(encoder.encode(event.delta.text));
+          }
+        }
+      } catch (err) {
+        controller.error(err);
+      } finally {
+        controller.close();
+      }
+    },
+  });
 
-  return new Response(upstream.body, {
-    headers: { "Content-Type": "text/event-stream" },
+  return new Response(body, {
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
   });
 }
 ```
@@ -231,19 +230,22 @@ curl -N -X POST http://localhost:3000/api/hello-llm \
   -d '{"question":"What is an embedding, in one sentence?"}'
 ```
 
-You should see server-sent events arrive in pieces rather than all at once. That trickle is the whole reason AI apps feel fast: the model produces tokens one at a time, and you show them as they arrive instead of making the user watch a spinner for eight seconds.
+You should see text arrive in pieces rather than all at once. That trickle is the whole reason AI apps feel fast: the model produces tokens one at a time, and you show them as they arrive instead of making the user watch a spinner for eight seconds.
 
-Four details in that file worth naming, because each returns later:
+Five details in that file worth naming, because each comes back later:
 
-- **`runtime = "edge"`** — this handler runs on Vercel's edge network, close to the user, and streams without buffering. Week 9 revisits when edge helps and when it hurts.
-- **The `HTTP-Referer` and `X-Title` headers** — OpenRouter uses them to group spend by app in your dashboard. Free attribution; set it once.
-- **Passing `upstream.body` straight through** — you are piping one stream into another rather than accumulating the whole response in memory. This is what keeps latency low and memory flat.
-- **The explicit failure branch** — the provider *will* return 429s and 503s. Week 9 turns this into a real fallback chain. Today it just has to not crash.
+- **`new Anthropic()` with no arguments** reads `ANTHROPIC_API_KEY` from the environment. Never pass a key as a literal, and never let this module be imported by a client component.
+- **`messages.stream()` rather than `messages.create()`** gives you an async iterable of events. You forward the `text_delta` pieces and ignore the rest — Week 3 explains what the other event types are.
+- **`claude-sonnet-5` is a deliberate choice, not a default.** It's the sensible middle for a two-sentence answer. Week 3 replaces this hardcoded string with a model policy that picks per task, and Week 11 turns that into a cost lever.
+- **`max_tokens` is a hard ceiling**, not a hint. Set too low, answers get cut off mid-sentence.
+- **The `try/catch/finally` around the loop.** The API *will* rate-limit and occasionally fail. Week 11 turns this into a real fallback chain. Today it just has to not hang the connection.
 
 > 📸 **Screenshot slot** — `docs/screenshots/week-02-first-stream.png`
-> *Capture: the terminal `curl` streaming SSE chunks, next to the browser showing the same answer appearing word by word.*
+> *Capture: the terminal `curl` streaming text, next to the browser showing the same answer appearing word by word.*
 
-Then a minimal client. In `app/(marketing)/page.tsx`, a form that posts the question and appends chunks as they arrive — under thirty lines, no library. Streaming from a route handler to a React component is a pattern you'll use in every week from here.
+Then a minimal client. In `app/(marketing)/page.tsx`, a form that posts the question and appends chunks as they arrive — under thirty lines, no library. Streaming from a route handler into a React component is a pattern you'll use in every week from here.
+
+This is also the natural first job to hand to Claude Code: the spec is small, the verifier is obvious (`pnpm typecheck`, then curl it), and you can read every line of the diff.
 
 ## 7. Supabase, local and hosted
 
@@ -297,7 +299,7 @@ Note the last line of the migration. RLS is enabled from the very first table, b
 Now the public URL.
 
 1. At [vercel.com/new](https://vercel.com/new), import your fork. Vercel detects Next.js; accept the defaults.
-2. Add environment variables **before the first deploy** — `OPENROUTER_API_KEY`, `OPENROUTER_DEFAULT_MODEL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_APP_URL`. Scope each to Production, Preview, and Development explicitly rather than clicking "all" out of habit; that habit is what puts a production key in a preview branch.
+2. Add environment variables **before the first deploy** — `ANTHROPIC_API_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_APP_URL`. Scope each to Production, Preview, and Development explicitly rather than clicking "all" out of habit; that habit is what puts a production key in a preview branch.
 3. Deploy.
 
 Optionally link the project locally, which lets you pull the deployed environment and reproduce a production-only bug:
@@ -308,7 +310,7 @@ vercel link
 vercel env pull .env.local
 ```
 
-**Preview deploys are the feature that matters.** Every branch you push gets its own URL, built exactly like production. From now on the workflow is: branch → push → get a URL → check it → merge. Week 8 attaches evals to that same pull request, so by then every preview URL comes with a quality score attached.
+**Preview deploys are the feature that matters.** Every branch you push gets its own URL, built exactly like production. From now on the workflow is: branch → push → get a URL → check it → merge. Week 9 attaches evals to that same pull request, so by then every preview URL comes with a quality score attached.
 
 Push the branch and open the PR:
 
@@ -329,6 +331,7 @@ Before merging, all six should be true:
 
 - [ ] `pnpm dev` serves `localhost:3000`
 - [ ] `curl` against `/api/hello-llm` streams a real answer
+- [ ] `/context` in Claude Code shows `CLAUDE.md` loaded
 - [ ] `git check-ignore .env.local` matches — no secret is staged
 - [ ] `supabase start` runs and `pnpm db:reset` applies `0001_init.sql`
 - [ ] The hosted Supabase project shows the `documents` table with RLS on
@@ -338,11 +341,13 @@ Merge the PR. `main` now deploys to production automatically.
 
 ## When it doesn't work
 
-**`OPENROUTER_API_KEY is undefined`.** Next.js reads `.env.local` at server start; restart `pnpm dev` after editing it. If it's still undefined in the browser, the variable is server-only — which is correct. Call it from a route handler.
+**`ANTHROPIC_API_KEY is undefined`.** Next.js reads `.env.local` at server start; restart `pnpm dev` after editing it. If it's still undefined in the browser, the variable is server-only — which is correct. Call it from a route handler.
 
-**402 from OpenRouter.** No credit on the account. Add $10.
+**400 `credit balance is too low`.** No credit on the account. Add $10 in the Console.
 
-**The response arrives all at once instead of streaming.** Something is buffering: a `await res.json()` on the client instead of reading the stream, or a proxy in between. Check with `curl -N` first — that isolates the app from the browser.
+**429.** You're rate-limited. The SDK already retries twice with backoff; if it's persistent, you're on a new account with low initial limits.
+
+**The response arrives all at once instead of streaming.** Something is buffering: `await res.json()` on the client instead of reading the body as a stream, or a proxy in between. Check with `curl -N` first — that isolates the app from the browser.
 
 **`supabase start` fails.** Docker isn't running, or ports 54321–54324 are taken by an old stack. `supabase stop --no-backup` clears it.
 
@@ -350,15 +355,15 @@ Merge the PR. `main` now deploys to production automatically.
 
 ## What this week cost
 
-A few cents of OpenRouter credit. Everything else is free tier. From Week 5, when you start embedding documents, costs become worth watching — and Week 9 makes watching them a system rather than a habit.
+A few cents of API credit. Everything else is free tier. From Week 5, when you start embedding documents, costs become worth watching — and Week 11 makes watching them a system rather than a habit.
 
 ---
 
 ## Open questions (for maintainers)
 
 - Is the local Supabase stack worth the Docker requirement for readers on constrained machines, or should local dev point at a second hosted project?
-- Should `CLAUDE.md` ship in the repo pre-written, or is writing it yourself part of the lesson?
+- Is a hand-written route handler the right first model call, or should this week use the SDK's higher-level helpers and save the raw stream for Week 3?
 
 ## Next week
 
-[Week 3 — LLM Foundations via OpenRouter](./03-llm-foundations.md): what that API call actually did. Tokens, context windows, structured outputs with Zod, tool calling, and the model router that replaces this week's hardcoded model with a real routing decision.
+[Week 3 — Claude API Foundations](./03-claude-api-foundations.md): what that API call actually did. Tokens, context windows, structured outputs with Zod, tool use, the effort dial, prompt caching, and the model policy that replaces this week's hardcoded model string with a real decision.

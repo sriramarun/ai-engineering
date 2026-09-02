@@ -24,7 +24,7 @@ The repo is scaffolded. No app code yet. Week 2 initializes the Next.js app and 
        │              ┌──────┴──────┐             │
        │              ▼             ▼             │
        │        ┌─────────┐   ┌──────────┐        │
-       │        │OpenRouter│  │  Stripe  │        │
+       │        │Anthropic │  │  Stripe  │        │
        │        │ (LLMs)   │  │(billing) │        │
        │        └─────────┘   └──────────┘        │
        │                                          │
@@ -47,9 +47,9 @@ Recorded as ADRs under `/docs/adr/`. Current:
 - [0001](./adr/0001-record-architecture-decisions.md) — Record architecture decisions.
 
 Planned (added as the corresponding post ships):
-- Choose OpenRouter over direct provider SDKs (Week 3)
-- Model router: typed abstraction over OpenRouter (Week 3)
+- Choose the Anthropic API over a multi-provider proxy (Week 3)
+- Model policy: typed per-task model selection (Week 3)
 - Zod at every LLM boundary (Week 4)
 - pgvector on Supabase over external vector DB (Week 5)
-- Multi-tenancy via RLS, not application-layer filtering (Week 11)
-- Usage-based billing metered from OpenRouter, invoiced via Stripe (Week 12)
+- Multi-tenancy via RLS, not application-layer filtering (Week 12)
+- Usage-based billing metered from token usage, invoiced via Stripe (Week 13)

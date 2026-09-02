@@ -1,12 +1,12 @@
 # Runbook
 
-Operational playbook for Scholar in production. Started skeletal; filled in for real in Week 9 (Operating in Production) and grown from there.
+Operational playbook for Scholar in production. Started skeletal; filled in for real in Week 11 (Operating in Production) and grown from there.
 
 ## Where things live
 
 - **App:** Vercel — [dashboard](https://vercel.com/dashboard)
 - **Database, auth, storage:** Supabase — [dashboard](https://supabase.com/dashboard)
-- **LLM traffic:** OpenRouter — [dashboard](https://openrouter.ai/activity)
+- **Model traffic:** Anthropic Console — [usage dashboard](https://console.anthropic.com/settings/usage)
 - **Errors:** Sentry
 - **LLM traces:** Langfuse
 - **Billing:** Stripe
@@ -16,25 +16,25 @@ Operational playbook for Scholar in production. Started skeletal; filled in for 
 1. Is the site up? Check [status.scholar.example](https://status.scholar.example) and hit the homepage.
 2. Check Sentry for a spike in errors in the last 15 minutes.
 3. Check Vercel deployment log for the most recent deploy.
-4. Check OpenRouter status page — provider outages are the single most common source of AI-app incidents.
+4. Check the Anthropic status page — provider outages are the single most common source of AI-app incidents.
 5. Check Supabase status page.
 
 ## Common incidents
 
 ### LLM calls failing with 5xx
-Likely OpenRouter or a specific provider outage. The model router (`lib/llm/router.ts`) should be falling over to the next model in the chain. If it isn't, check `OPENROUTER_FALLBACK_MODELS` is set in Vercel env.
+Likely a provider outage or a rate limit. The model policy (`lib/llm/`) should be falling back to the next model in the chain, and then to the second provider. If it isn't, check the fallback config is set in Vercel env.
 
 ### Latency spike
 Check Langfuse for slow traces. Common causes: retrieval returning too many chunks (Week 5), a model swap that pulled in a slower model (Week 3), a Supabase query missing an index (Week 5, 11).
 
 ### Cost spike
-Check OpenRouter activity dashboard for the top spender. Common causes: a runaway agent loop (Week 7 — add a max-iterations guard), a user hitting an unmetered endpoint (Week 12 — check rate limiter), a debug prompt with the full corpus in context (Week 5).
+Check Anthropic Console usage dashboard for the top spender. Common causes: a runaway agent loop (Week 8 — add a max-iterations guard), a user hitting an unmetered endpoint (Week 13 — check rate limiter), a debug prompt with the full corpus in context (Week 5).
 
 ### Auth failing
-Supabase Auth logs first. Common causes: OAuth provider credentials expired, magic-link email deliverability, RLS policy blocking the right user (Week 11).
+Supabase Auth logs first. Common causes: OAuth provider credentials expired, magic-link email deliverability, RLS policy blocking the right user (Week 12).
 
 ### Prompt injection suspected
-Isolate the offending request from Langfuse traces. Rotate any leaked credentials immediately. Add the payload to the eval suite (Week 8, 09) so the regression is caught next time.
+Isolate the offending request from Langfuse traces. Rotate any leaked credentials immediately. Add the payload to the eval suite (Week 9, 09) so the regression is caught next time.
 
 ## Escalation
 
@@ -47,5 +47,5 @@ Isolate the offending request from Langfuse traces. Rotate any leaked credential
 Every Monday:
 - Sentry: any errors unresolved > 7 days?
 - Langfuse: eval scores trending down?
-- OpenRouter: any user consistently over 2× their tier's expected usage?
+- Token usage: any user consistently over 2× their tier's expected usage?
 - Supabase: any slow queries logged?

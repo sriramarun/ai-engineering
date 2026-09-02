@@ -3,6 +3,7 @@ week: 1
 title: "What AI Engineering Is (and Isn't) — Reading the Skills Map"
 slug: "what-is-ai-engineering"
 pillar: "Introduction — all four pillars"
+certification: "Course overview — all five CCAR-F domains"
 status: draft
 author: "Sriram Krishnan"
 published:
@@ -46,9 +47,9 @@ Two comparisons clear up most of the confusion.
 
 **It isn't machine learning engineering.** An ML engineer's core loop is data → model → metric: collecting and labelling data, choosing an architecture, training, tuning, and measuring. The artifact they produce is a model. An AI engineer's core loop is product → system → eval: taking a capability that already exists in a model, building the system around it that makes it useful, and measuring whether it works for real users. The artifact is an application.
 
-The skills overlap at the edges — you need enough ML vocabulary to know when a small trained classifier beats a giant general model, which is exactly what Week 10 covers — but the day jobs are different. You will not need a GPU in this course.
+The skills overlap at the edges — you need enough ML vocabulary to know when a small trained classifier beats a giant general model, which is exactly what Week 11 covers — but the day jobs are different. You will not need a GPU in this course.
 
-**It isn't "vibe coding."** You can get a demo working by prompting a coding agent until something appears on screen. This is genuinely useful, and Week 6 is entirely about doing it well. But a demo becomes a product only when someone answers the unglamorous questions: what happens when the model returns malformed JSON, when a user uploads a 400-page PDF, when the provider 503s, when two users' documents must never mix, when the monthly bill arrives. The difference between a vibe-coded demo and an AI product is not talent. It is a checklist, and this course is that checklist.
+**It isn't "vibe coding."** You can get a demo working by prompting a coding agent until something appears on screen. This is genuinely useful, and Weeks 6, 7, and 10 are entirely about doing it well. But a demo becomes a product only when someone answers the unglamorous questions: what happens when the model returns malformed JSON, when a user uploads a 400-page PDF, when the provider 503s, when two users' documents must never mix, when the monthly bill arrives. The difference between a vibe-coded demo and an AI product is not talent. It is a checklist, and this course is that checklist.
 
 ## The Skills Map: four pillars
 
@@ -58,12 +59,12 @@ Andrew Ng published an *AI Engineering Skills Map* in 2026 that is the most usef
 
 The technical core, which Ng splits into six sub-skills:
 
-- **LLM foundations** — tokens, context windows, structured outputs, tool calling, model selection. What the API actually does. *Week 3.*
+- **Model foundations** — tokens, context windows, structured outputs, tool use, caching, model choice. What the API actually does. *Week 3.*
 - **Grounding with data** — retrieval, embeddings, vector search, citations. Getting the model to answer from *your* data instead of its memory. *Week 5.*
-- **Agentic systems** — loops where the model decides what to do next and calls tools to do it. *Week 7.*
-- **Evaluation-driven development** — datasets, judges, thresholds, regression gates. *Week 8.*
-- **Operating in production** — cost, latency, reliability, observability, safety. *Week 9.*
-- **ML foundations** — enough to know when not to use an LLM. *Week 10.*
+- **Agentic systems** — loops where the model decides what to do next and calls tools to do it. *Week 8.*
+- **Evaluation-driven development** — datasets, judges, thresholds, regression gates. *Week 9.*
+- **Operating in production** — cost, latency, reliability, observability, safety. *Week 11.*
+- **ML foundations** — enough to know when not to use a model call at all. *Folded into Week 11.*
 
 ### Pillar 2 — Software engineering fundamentals
 
@@ -71,7 +72,7 @@ Everything that was already true: types, tests, migrations, CI, error handling, 
 
 ### Pillar 3 — Using coding agents
 
-New, real, and measurable. An engineer who knows how to specify work for a coding agent, give it a way to check its own output, and keep it away from production data ships several times faster than one who doesn't. This is a learnable craft with named techniques, not a personality trait. *Week 6.*
+New, real, and measurable. An engineer who knows how to specify work for a coding agent, give it a way to check its own output, and keep it away from production data ships several times faster than one who doesn't. This is a learnable craft with named techniques, not a personality trait. *Weeks 6, 7, and 10 — a quarter of this course.*
 
 ### Pillar 4 — Shaping the build
 
@@ -100,7 +101,7 @@ Any teaching project has to be chosen carefully, because the product decides whi
 - **It needs agentic behaviour**, because a real research question isn't one search. That gives you a genuine reason to build a planning loop rather than a toy one.
 - **Quality is measurable**, which makes evals honest: did it cite the right passage, yes or no? Compare that to "write me a poem," where you cannot build a regression suite.
 - **It has real users with real data**, which forces multi-tenancy, row-level security, and privacy — the parts most tutorials skip entirely.
-- **It costs money to run**, so cost control and metering aren't hypothetical. You will watch your own OpenRouter spend and decide what to do about it.
+- **It costs money to run**, so cost control and metering aren't hypothetical. You will watch your own API spend and decide what to do about it.
 - **People actually want it.** You can plausibly launch this and get users, which makes Weeks 13 and 14 real rather than performative.
 
 ### What it looks like at each stage
@@ -109,12 +110,13 @@ You do not build all of it at once. Each week Scholar becomes a slightly more se
 
 | After week | Scholar is… |
 |---|---|
-| 2 | A deployed page that calls a model |
+| 2 | A deployed page that streams a real model answer |
 | 5 | A working RAG app over your own documents, with citations |
-| 8 | The same app, with an eval suite that stops you shipping regressions |
-| 9 | A monitored production service you could put in front of strangers |
-| 11 | A multi-user product with proper data isolation |
-| 12 | A business |
+| 7 | A project your agent can run the tests and evals of, by itself |
+| 9 | The same app, with an eval suite that stops you shipping regressions |
+| 11 | A monitored production service you could put in front of strangers |
+| 12 | A multi-user product with proper data isolation |
+| 13 | A business |
 | 14 | Launched |
 
 > 📸 **Screenshot slot** — `docs/screenshots/week-01-scholar-final.png`
@@ -122,9 +124,13 @@ You do not build all of it at once. Each week Scholar becomes a slightly more se
 
 ### The stack, in one paragraph
 
-Next.js and TypeScript for the app, Supabase for auth and Postgres and file storage and vector search, OpenRouter for model access, Vercel for deployment, Stripe for billing, Langfuse and Sentry for observability. Every choice is defensible for a real product, every one has a free tier, and the whole course costs under $50 in API credit. The full reasoning for each is in [SYLLABUS.md](../SYLLABUS.md); the short version is that this stack lets you spend your attention on AI engineering rather than on infrastructure.
+Next.js and TypeScript for the app, Supabase for auth and Postgres and file storage and vector search, the Anthropic API for model access, Vercel for deployment, Stripe for billing, Semgrep for scanning, Langfuse and Sentry for observability. Claude Code is the agent you build it all with. Every choice is defensible for a real product, and the full reasoning is in [SYLLABUS.md](../SYLLABUS.md); the short version is that this stack lets you spend your attention on AI engineering rather than on infrastructure.
 
-One choice worth calling out now: **OpenRouter**. It is a single API that proxies to every major model — Anthropic, OpenAI, Google, and the open-weight models — so switching models is a string change rather than an SDK migration. That matters pedagogically, because Week 8 asks you to A/B two models on your own task and see the difference for yourself. It also matters practically: model choice is a decision you should be able to revisit cheaply, forever.
+Two choices worth calling out now.
+
+**Claude Code** is the coding agent, and the course commits to it rather than hedging. Weeks 6, 7, and 10 teach it directly — context engineering, building an MCP server it can use, and reviewing what it writes. Set it up first: [Week 0](./00-setup-claude-code.md). It is a paid tool, and this course would rather say that plainly than build fourteen weeks on a free tier that can be withdrawn — which is exactly what happened to the agent an earlier draft recommended.
+
+**The Anthropic API** is how Scholar itself talks to a model. Structured outputs, tool use, prompt caching, and the effort dial are all first-class there, and those are the four things Week 3 is built on. A second provider stays wired up for one job — the Week 9 A/B across model families — because a course that never shows you another model teaches you to assume rather than measure.
 
 ---
 
@@ -152,6 +158,8 @@ Score yourself 0–3 on each line: 0 = never heard of it, 1 = read about it, 2 =
 - I use a coding agent for real work, not just autocomplete
 - I write specs an agent can execute against
 - I give the agent a way to verify its own output
+- I have written an MCP server, or a tool an agent calls
+- I have reviewed a large diff I did not write, and found something real in it
 
 **Pillar 4 — Shaping the build**
 
@@ -199,4 +207,4 @@ $0. No accounts, no keys, no API calls.
 
 ## Next week
 
-[Week 2 — Your AI Engineering Environment](./02-environment-and-repo.md): Node, pnpm, a coding agent configured for this repo, an OpenRouter key, a Supabase project, and a Vercel deployment. You end next week with a public URL that calls a real model.
+[Week 2 — Your AI Engineering Environment](./02-environment-and-repo.md): Node, pnpm, an Anthropic API key, a Supabase project, and a Vercel deployment. You end next week with a public URL that streams a real answer.

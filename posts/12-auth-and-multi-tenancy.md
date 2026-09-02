@@ -1,7 +1,7 @@
 ---
-week: 4
-title: "Software Engineering Fundamentals for AI Systems"
-slug: "software-fundamentals"
+week: 12
+title: "Auth, Multi-Tenancy, and Data Isolation"
+slug: "auth-and-multi-tenancy"
 pillar: "Pillar 2: Software Engineering Fundamentals"
 certification: "—"
 status: draft
@@ -11,21 +11,21 @@ last_reviewed:
 word_target: 3000
 ---
 
-# Week 4. Software Engineering Fundamentals for AI Systems
+# Week 12. Auth, Multi-Tenancy, and Data Isolation
 
 > **Status:** Placeholder. This week has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline and [docs/concept-map.md](../docs/concept-map.md) for how it connects.
 
 ## What this week covers
 
-The cost/latency/reliability/quality/privacy tradeoff table. RSC vs. server actions vs. route handlers. Zod as the contract at every boundary. Testing what's nondeterministic. Structured logging and error handling. Static analysis on AI-written code with Semgrep — what it catches that review doesn't.
+Turning Scholar from "my app" into "everyone's app." Supabase Auth. Row-Level Security that actually holds. Sharing patterns. Per-user rate limits. The three mistakes that leak one tenant's data to another, and how to catch them in tests.
 
 ## What you'll build
 
-A proper module layout, Vitest, the first typed API route, and a Semgrep pass in CI with three real findings fixed.
+An auth flow, a personal library behind RLS, and Playwright tests that prove tenant isolation.
 
 ## Prerequisites
 
-- Week 3 completed.
+- Week 11 completed.
 - Repo up to date with `main`.
 
 ## Reading time
@@ -38,4 +38,4 @@ A proper module layout, Vitest, the first typed API route, and a Semgrep pass in
 
 ## Next week
 
-[Week 5](05-grounding-rag-supabase.md)
+[Week 13](13-billing-and-monetization.md)

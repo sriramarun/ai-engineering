@@ -2,7 +2,8 @@
 week: 5
 title: "Grounding Models with Data — RAG on Supabase"
 slug: "grounding-rag-supabase"
-pillar: "Pillar 1, sub-skill 2: Grounding models with data"
+pillar: "Pillar 1: Building AI Applications — grounding with data"
+certification: "Prompt Engineering & Structured Output"
 status: draft
 author: "Sriram Krishnan"
 published:
@@ -12,15 +13,15 @@ word_target: 3000
 
 # Week 5. Grounding Models with Data — RAG on Supabase
 
-> **Status:** Placeholder. This post has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline.
+> **Status:** Placeholder. This week has not been written yet. See [SYLLABUS.md](../SYLLABUS.md) for the planned outline and [docs/concept-map.md](../docs/concept-map.md) for how it connects.
 
-## What this post covers
+## What this week covers
 
-_See the SYLLABUS entry for this post._
+Why grounding matters. Ingestion, chunking strategies, embeddings, pgvector, hybrid search, reranking, context assembly, and citations. Claude's citations feature on document blocks. The RAG failure modes practitioners actually hit.
 
 ## What you'll build
 
-_The commit, PR, or deployed change this post ends with._
+Document upload, an ingestion pipeline, a search route, and a chat UI that streams cited answers over a real corpus.
 
 ## Prerequisites
 
@@ -35,3 +36,6 @@ _The commit, PR, or deployed change this post ends with._
 
 - _Add open questions here as the draft comes together._
 
+## Next week
+
+[Week 6](06-working-with-claude-code.md)
